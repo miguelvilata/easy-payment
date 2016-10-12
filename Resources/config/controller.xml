@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="easy_payment.gateway.base.controller" public="false" class="%easy_payment.stripe.controller%">
+            <call method="setFormFactory">
+                <argument type="service" id="form.factory" />
+            </call>
+
+            <call method="setTemplating">
+                <argument type="service" id="templating" />
+            </call>
+
+            <call method="setSession">
+                <argument type="service" id="session" />
+            </call>
+
+            <call method="setTranslator">
+                <argument type="service" id="translator" />
+            </call>
+
+            <call method="setRouter">
+                <argument type="service" id="router" />
+            </call>
+
+            <call method="setRouter">
+                <argument type="service" id="router" />
+            </call>
+
+            <call method="setFailPath">
+                <argument>%easy_payment.default.fail_path%</argument>
+            </call>
+
+            <call method="setSuccessPath">
+                <argument>%easy_payment.default.success_path%</argument>
+            </call>
+        </service>
+
+        <service id="easy_payment.gateway.stripe_payment.controller" public="true" parent="easy_payment.gateway.base.controller" class="Miguelv\EasyPaymentBundle\Controller\StripePaymentController">
+            <argument>%easy_payment.stripe.form.type%</argument>
+
+            <call method="setManager">
+                <argument type="service" id="easy_payment.gateway.stripe.manager" />
+            </call>
+        </service>
+    </services>
+</container>

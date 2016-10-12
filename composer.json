@@ -1,26 +1,33 @@
 {
-  "name": "miguelv/easy-payment",
-  "type": "project",
-  "description": "Easy payments inside Symfony",
+  "name": "miguelv/easy-payment-bundle",
+  "type": "symfony-bundle",
+  "description": "Easy payments on top of Symfony",
   "keywords": ["payment","stripe"],
-  "homepage": "https://github.com/miguelvilata/easy-payment",
+  "homepage": "https://github.com/miguelvilata/EasyPaymentBundle",
   "license": "MIT",
   "authors": [
     {
       "name": "Miguel Vilata",
       "email": "miguel.vilata@gmail.com",
-      "homepage": "miguelvilata.com",
+      "homepage": "http://miguelvilata.com",
       "role": "Developer"
     }
   ],
   "require": {
-    "php": ">=5.6",
+    "php": "^5.3 || ^7.0",
     "symfony/symfony": "2.8.*",
     "stripe/stripe-php": "^4.0"
   },
   "autoload": {
-    "psr-4": {
-      "": "src/"
-    },
+    "psr-4": { "Miguelv\\EasyPaymentBundle\\": "" },
+    "exclude-from-classmap": [
+      "Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": { "Miguelv\\EasyPaymentBundle\\Tests\\": "Tests/" }
+  },
+  "config": {
+    "sort-packages": true
   }
 }

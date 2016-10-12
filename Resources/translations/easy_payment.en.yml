@@ -1,0 +1,8 @@
+button:
+    label:
+        pay_with_card: 'Pay with -> card'
+
+flashbag_messages:
+    payment:
+        error: 'There was and error during the payment, please contact with with us'
+        success: 'Thank for your payment'
