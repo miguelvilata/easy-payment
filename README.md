@@ -1,6 +1,8 @@
 EasyPaymentBundle Installation
 ========================
 
+This bundle is under hard development, it's still not ready to use.
+
 Step 1: Download the Bundle
 ---------------------------
 

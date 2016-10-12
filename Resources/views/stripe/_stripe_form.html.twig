@@ -1,0 +1,8 @@
+{{ form_start(form, {'action': url('easy_payment_stripe_process')}) }}
+<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="{{ form.children.key.vars.value }}"
+        data-description="{{ form.vars.value.description }}"
+        data-amount="{{ form.vars.value.amount }}"
+        data-locale="auto"></script>
+
+{{ form_end(form) }}
