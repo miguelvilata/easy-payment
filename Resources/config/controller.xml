@@ -38,12 +38,27 @@
             </call>
         </service>
 
-        <service id="easy_payment.gateway.stripe_payment.controller" public="true" parent="easy_payment.gateway.base.controller" class="Miguelv\EasyPaymentBundle\Controller\StripePaymentController">
+        <!--Stripe payment-->
+        <service id="easy_payment.gateway.stripe_payment.controller" public="true"
+                 parent="easy_payment.gateway.base.controller"
+                 class="Miguelv\EasyPaymentBundle\Controller\StripePaymentController">
             <argument>%easy_payment.stripe.form.type%</argument>
 
             <call method="setManager">
                 <argument type="service" id="easy_payment.gateway.stripe.manager" />
             </call>
         </service>
+
+        <!--Paypal payment-->
+        <service id="easy_payment.gateway.paypal_payment.controller" public="true"
+                 parent="easy_payment.gateway.base.controller"
+                 class="Miguelv\EasyPaymentBundle\Controller\PaypalPaymentController">
+            <argument>%easy_payment.paypal.form.type%</argument>
+
+            <call method="setPayum">
+                <argument type="service" id="payum" />
+            </call>
+        </service>
+
     </services>
 </container>

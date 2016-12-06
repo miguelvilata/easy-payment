@@ -87,7 +87,7 @@ class StripePaymentController extends AbstractBaseController
             'metadata' => $metadata, //Metadata tha Stripe store as a Aditional Field
         ])->getForm();
 
-        return $this->getTemplating()->renderResponse('EasyPaymentBundle:stripe:_stripe_form.html.twig', [
+        return $this->getTemplating()->renderResponse('EasyPaymentBundle:stripe:_form.html.twig', [
             'form' => $form->createView(),
         ]);        
     }    
@@ -100,22 +100,6 @@ class StripePaymentController extends AbstractBaseController
     public function setManager(PaymentManagerInterface $stripeManager)
     {
         $this->stripeManager = $stripeManager;
-    }
-
-    /**
-     * @return string
-     */
-    public function paymentSuccessAction()
-    {
-        return $this->renderView('EasyPaymentBundle::success.html.twig');
-    }
-
-    /**
-     * @return string
-     */
-    public function paymentFailAction()
-    {
-        return $this->renderView('EasyPaymentBundle::fail.html.twig');
     }
 
     /**

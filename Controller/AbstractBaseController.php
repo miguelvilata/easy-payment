@@ -32,6 +32,22 @@ Abstract class AbstractBaseController
     protected $failPath, $successPath, $router;
 
     /**
+     * @return string
+     */
+    protected function paymentSuccessAction()
+    {
+        return $this->renderView('EasyPaymentBundle::success.html.twig');
+    }
+
+    /**
+     * @return string
+     */
+    protected function paymentFailAction()
+    {
+        return $this->renderView('EasyPaymentBundle::fail.html.twig');
+    }
+    
+    /**
      * @param $key
      * @return string
      */
@@ -49,6 +65,25 @@ Abstract class AbstractBaseController
     public function createForm($type, $data = null, array $options = array())
     {
         return $this->getFormFactory()->create($type, $data, $options);
+    }
+
+    /**
+     * Creates and returns a form builder instance.
+     *
+     * @param mixed $data    The initial data for the form
+     * @param array $options Options for the form
+     *
+     * @return FormBuilder
+     */
+    public function createFormBuilder($data = null, array $options = array())
+    {
+        if (method_exists('Symfony\Component\Form\AbstractType', 'getBlockPrefix')) {
+            $type = 'Symfony\Component\Form\Extension\Core\Type\FormType';
+        } else {
+            $type = 'form';
+        }
+
+        return $this->getFormFactory()->createBuilder($type, $data, $options);
     }
 
     /**

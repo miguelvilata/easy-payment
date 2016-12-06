@@ -1,6 +1,6 @@
 button:
     label:
-        pay_with_card: 'Pay with -> card'
+        pay_with_stripe: 'Stripe'
 
 flashbag_messages:
     payment:

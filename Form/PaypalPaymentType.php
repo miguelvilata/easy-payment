@@ -9,19 +9,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
- * Class StripePaymentType
+ * Class PaypalPaymentType
  */
-class StripePaymentType extends AbstractType
+class PaypalPaymentType extends AbstractType
 {
     /** @var string */
-    private $validationGroups, $publishableKey, $defaultCurrency;
+    private $validationGroups, $defaultCurrency;
 
     /** @var */
     private $defaultData;
 
-    public function __construct($publishableKey, array $validationGroups, $defaultCurrency, array $defaultData = [])
+    public function __construct(array $validationGroups, $defaultCurrency, array $defaultData = [])
     {
-        $this->publishableKey = $publishableKey;
         $this->validationGroups = $validationGroups;
         $this->defaultCurrency = $defaultCurrency;
         $this->defaultData = $defaultData;
@@ -39,21 +38,6 @@ class StripePaymentType extends AbstractType
             ->add('amount', HiddenType::class)
             ->add('currency', HiddenType::class, [
                 'data' => $options['currency'],
-            ])
-            ->add('key', HiddenType::class, [
-                'data' => $options['stripe_key'],
-            ])
-            ->add('stripe_data', CollectionType::class, [
-                'allow_extra_fields' => true,
-                'label' => false,
-                'entry_type' => HiddenType::class,
-                'data' => $this->getDefaultData(isset($options['data']) ? $options['data']: []),
-            ])
-
-            ->add('metadata', CollectionType::class, [
-                'allow_extra_fields' => true,
-                'label' => false,
-                'entry_type' => HiddenType::class,
             ]);
     }
 
@@ -64,27 +48,13 @@ class StripePaymentType extends AbstractType
     {
         $resolver->setDefaults(array(
             'validation_groups' => $this->validationGroups,
-            'stripe_key' => $this->publishableKey,
             'currency' => $this->defaultCurrency,
             'allow_extra_fields' => true,
         ));
     }
 
-    protected function getDefaultData($data = [])
-    {
-        unset($data['metadata']);
-        $this->defaultData = array_merge($this->defaultData, $data);
-        $result = [];
-
-        foreach ($this->defaultData as $key => $value) {
-            $result[str_replace('_', '-', $key)] = $value;
-        }
-
-        return $result;
-    }
-
     public function getName()
     {
-        return 'easy_payment_stripe_type';
+        return 'easy_payment_paypal_type';
     }
 }
