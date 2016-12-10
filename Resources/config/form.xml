@@ -13,5 +13,12 @@
             <tag name="form.type" />
         </service>
 
+        <service id="easy_payment_paypal_type" class="Miguelv\EasyPaymentBundle\Form\PaypalPaymentType">
+            <argument>%easy_payment.paypal.form.validation_groups%</argument>
+            <argument>%easy_payment.default.currency%</argument>
+            <argument>%easy_payment.paypal.form.data%</argument>
+            <tag name="form.type" />
+        </service>
+
     </services>
 </container>

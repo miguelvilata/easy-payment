@@ -5,8 +5,11 @@
         http://symfony.com/schema/routing/routing-1.0.xsd">
 
     <!-- Load -->
-    <import
-            type="xml"
-            resource="@EasyPaymentBundle/Resources/config/routing/payment.xml"
-            prefix="/easy-payment/controller/payment/"/>
+    <import type="xml"
+            resource="@EasyPaymentBundle/Resources/config/routing/stripe.xml"
+            prefix="/easy-payment/stripe/"/>
+
+    <import type="xml"
+            resource="@EasyPaymentBundle/Resources/config/routing/paypal.xml"
+            prefix="/easy-payment/paypal/"/>
 </routes>

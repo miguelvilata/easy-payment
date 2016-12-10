@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <routes xmlns="http://symfony.com/schema/routing" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
     <route id="easy_payment_payment_success" path="/success">
-        <default key="_controller">easy_payment.gateway.stripe_payment.controller:paymentSuccessAction </default>
+        <default key="_controller">easy_payment.gateway.paypal_payment.controller:paymentSuccessAction </default>
     </route>
 
     <route id="easy_payment_payment_fail" path="/fail">
-        <default key="_controller">easy_payment.gateway.stripe_payment.controller:paymentFailAction </default>
+        <default key="_controller">easy_payment.gateway.paypal_payment.controller:paymentFailAction </default>
     </route>
 
-    <route id="easy_payment_stripe_process" path="/stripe-payment">
-        <default key="_controller">easy_payment.gateway.stripe_payment.controller:paymentAction</default>
+    <route id="easy_payment_paypal_process" path="/payment">
+        <default key="_controller">easy_payment.gateway.paypal_payment.controller:paymentAction</default>
     </route>
 </routes>

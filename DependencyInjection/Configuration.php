@@ -24,58 +24,24 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
 
-                ->arrayNode('stripe')->isRequired()
-                    ->children()
-                        ->scalarNode('publishable_key')
-                            ->cannotBeEmpty()
-                            ->isRequired()
-                        ->end()
+                ->append($this->getStripeNode())
 
-                        ->scalarNode('apiKey')
-                            ->cannotBeEmpty()
-                            ->isRequired()
-                        ->end()
+                ->append($this->getPaypalNode())
 
-                        ->scalarNode('controller')
-                            ->defaultValue('Miguelv\EasyPaymentBundle\Controller\StripePaymentController')
-                            ->cannotBeEmpty()
-                        ->end()
-            
-                        ->scalarNode('manager')
-                            ->defaultValue('Miguelv\EasyPaymentBundle\Gateways\Stripe\StripeManager')
-                            ->cannotBeEmpty()
-                        ->end()
-
-                        ->arrayNode('form')->addDefaultsIfNotSet()
-                            ->children()
-
-                                ->scalarNode('type')
-                                    ->defaultValue('easy_payment_stripe_type')
-                                    ->cannotBeEmpty()
-                                 ->end()
-
-                                ->arrayNode('validation_groups')
-                                    ->prototype('scalar')->end()
-                                    ->defaultValue(array('Default'))
-                                    ->cannotBeEmpty()
-                                ->end()
-
-                                ->arrayNode('data')
-                                    ->defaultValue([])
-                                    ->cannotBeEmpty()
-                                    ->treatNullLike(array())
-                                    ->requiresAtLeastOneElement()
-                                    ->useAttributeAsKey('name')
-                                    ->prototype('scalar')->end()
-                                ->end()
-        
-            
-                            ->end()
-                        ->end()
-
-
-                    ->end()
-                ->end()
+//               @tood Check that are are valida Classes
+//                ->arrayNode('model')->cannotBeEmpty()
+//                    ->children()
+//                        ->scalarNode('order')
+//                            ->cannotBeEmpty()
+//                            ->defaultValue('Miguelv\EasyPaymentBundle\Entity\PaypalPaymentDetails')
+//                        ->end()
+//
+//                        ->scalarNode('token')
+//                            ->cannotBeEmpty()
+//                            ->defaultValue('Miguelv\EasyPaymentBundle\Entity\PaypalPaymentToken')
+//                        ->end()
+//                    ->end()
+//                ->end()
 
                 ->arrayNode('default')->isRequired()
                     ->children()
@@ -93,12 +59,130 @@ class Configuration implements ConfigurationInterface
                             ->cannotBeEmpty()
                             ->defaultValue('usd')
                         ->end()
-
                     ->end()
                 ->end()
+            ->end()
         ;
 
         return $treeBuilder;
     }
 
+    /**
+     * @return ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    protected function getPaypalNode()
+    {
+        $builder = new TreeBuilder();
+
+        return $builder->root('paypal')
+            ->children()
+
+                ->arrayNode('express_checkout')->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('username')
+                            ->cannotBeEmpty()
+                        ->end()
+
+                        ->scalarNode('password')
+                            ->cannotBeEmpty()
+                        ->end()
+
+                        ->scalarNode('signature')
+                            ->cannotBeEmpty()
+                        ->end()
+
+                        ->scalarNode('factory')
+                            ->cannotBeEmpty()
+                            ->defaultValue('paypal_express_checkout')
+                        ->end()
+
+                        ->scalarNode('sandbox')
+                            ->cannotBeEmpty()
+                        ->end()
+                    ->end()
+                ->end()
+
+                ->arrayNode('form')->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('type')
+                            ->defaultValue('easy_payment_paypal_type')
+                            ->cannotBeEmpty()
+                         ->end()
+
+                        ->arrayNode('validation_groups')
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array('Default'))
+                            ->cannotBeEmpty()
+                        ->end()
+
+                        ->arrayNode('data')
+                            ->info('Use this option to send default values to the form.')
+                            ->defaultValue([])
+                            ->cannotBeEmpty()
+                            ->treatNullLike([])
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * @return ArrayNodeDefinition|\Symfony\Component\Config\Definition\Builder\NodeDefinition
+     */
+    protected function getStripeNode()
+    {
+        $builder = new TreeBuilder();
+
+        return $builder->root('stripe')
+            ->children()
+                ->scalarNode('publishable_key')
+                    ->cannotBeEmpty()
+                    ->isRequired()
+                ->end()
+
+                ->scalarNode('apiKey')
+                    ->cannotBeEmpty()
+                    ->isRequired()
+                ->end()
+
+                ->scalarNode('controller')
+                    ->defaultValue('Miguelv\EasyPaymentBundle\Controller\StripePaymentController')
+                    ->cannotBeEmpty()
+                ->end()
+
+                ->scalarNode('manager')
+                    ->defaultValue('Miguelv\EasyPaymentBundle\Gateways\Stripe\StripeManager')
+                    ->cannotBeEmpty()
+                ->end()
+
+                ->arrayNode('form')->addDefaultsIfNotSet()
+                    ->children()
+
+                        ->scalarNode('type')
+                            ->defaultValue('easy_payment_stripe_type')
+                            ->cannotBeEmpty()
+                         ->end()
+
+                        ->arrayNode('validation_groups')
+                            ->prototype('scalar')->end()
+                            ->defaultValue(array('Default'))
+                            ->cannotBeEmpty()
+                        ->end()
+
+                        ->arrayNode('data')
+                            ->info('Use this option to send default values to the form.')
+                            ->defaultValue([])
+                            ->cannotBeEmpty()
+                            ->treatNullLike([])
+                            ->requiresAtLeastOneElement()
+                            ->useAttributeAsKey('name')
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
 }

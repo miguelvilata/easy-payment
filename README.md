@@ -152,6 +152,7 @@ easy_payment:
         data: # You can put here any default values admited by Stripe: see https://stripe.com/docs/checkout
           image: 'http://www.my-company.com/logo.png'
           name: 'My Company'
+          description: 'Foo Product (12$)'
           locale: auto
           zip-code: true
           billing-address: false
